@@ -1,21 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
-  #ifdef TARGET_OS_MAC
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
-  #elif defined __linux__
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
-  #elif defined _WIN32 || defined _WIN64
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
-  #else
-  #error "unknown platform"
-  #endif
+#ifdef WIN32
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#endif
 
 #include <iostream>
 using namespace std;
