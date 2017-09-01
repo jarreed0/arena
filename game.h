@@ -1,11 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
 
+  #ifdef TARGET_OS_MAC
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_ttf.h>
+  #elif defined __linux__
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_ttf.h>
+  #elif defined _WIN32 || defined _WIN64
+    #include <SDL.h>
+    #include <SDL_image.h>
+    #include <SDL_ttf.h>
+  #else
+  #error "unknown platform"
+  #endif
+
 #include <iostream>
 using namespace std;
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 
 #include "object.h"
 #include "audio.h"
@@ -20,6 +33,11 @@ public:
   void render();
   void draw(Object o);
   void draw(const char* msg, int x, int y, int r, int g, int b, int size);
+  void AddController(int id);
+  void RemoveController(int id);
+  void OnControllerButton(const SDL_ControllerButtonEvent sdlEvent);
+  void OnControllerAxis(const SDL_ControllerAxisEvent sdlEvent);
+  void EventLoop();
 private:
   bool block, release;
   SDL_Renderer* ren;
