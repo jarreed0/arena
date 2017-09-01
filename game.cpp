@@ -7,6 +7,9 @@ Game::Game() {
   TTF_Init();
   running=true;
   font = TTF_OpenFont("Sans.ttf", 24);
+  block.setSource(0, 0, 50, 50);
+  block.setImage("res/block.png", ren);
+  loadMap(1);
   loop();
 }
 
@@ -36,16 +39,16 @@ void Game::loop() {
 }
 
 void Game::render() {
-  SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+  SDL_SetRenderDrawColor(ren, 135, 206, 250, 255);
   SDL_Rect rect;
   rect.x=rect.y=0;
   rect.w=800;
   rect.h=500;
   SDL_RenderFillRect(ren, &rect);
 
-  int fps = 6;
-  string s = "FPS: " + to_string(fps);
-  draw(s.c_str(), 5, 1, 0, 255, 0, 24);
+  drawMap();
+  drawHUD();
+
 
   frameCount++;
   int timerFPS = SDL_GetTicks()-lastFrame;
@@ -100,8 +103,29 @@ void Game::loadMap(int m) {
   map.clear();
   map.empty();
   if(m == 1) {
-    for(int i=0; i>10; i++) {
-      
+    for(int i=0; i<16; i++) {
+      block.setDest(50*i, 0, 50, 50);
+      map.push_back(block);
+      block.setDest(50*i, 450, 50, 50);
+      map.push_back(block);
+    }
+    for(int i=0; i<8; i++) {
+      block.setDest(0, (i*50)+50, 50, 50);
+      map.push_back(block);
+      block.setDest(750, (i*50)+50, 50, 50);
+      map.push_back(block);
     }
   }
+}
+
+void Game::drawMap() {
+  for(int i=0; i<map.size(); i++) {
+    draw(map[i]);
+  }
+}
+
+void Game::drawHUD() {
+  int fps = 6;
+  string s = "FPS: " + to_string(fps);
+  draw(s.c_str(), 5, 1, 0, 255, 0, 24);
 }

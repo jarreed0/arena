@@ -25,12 +25,15 @@ public:
   void draw(Object o);
   void draw(const char* msg, int x, int y, int r, int g, int b, int size);
   void loadMap(int m);
+  void drawMap();
+  void drawHUD();
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
   TTF_Font *font;
   bool running;
   int frameCount, timerFPS, lastFrame;
+  Object block;
   vector<Object> map;
 };
 
