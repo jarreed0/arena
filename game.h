@@ -31,6 +31,7 @@ private:
   TTF_Font *font;
   bool running;
   int frameCount, timerFPS, lastFrame;
+  Object block;
   vector<Object> map;
 };
 
