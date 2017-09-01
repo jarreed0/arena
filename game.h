@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#ifdef WIN32
+#ifdef WIN64
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

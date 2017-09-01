@@ -135,7 +135,7 @@ void Game::EventLoop() {
             break;
 
         case SDL_CONTROLLERDEVICEREMOVED:
-            //RemoveController(sdlEvent.cdevice);
+            RemoveController(sdlEvent.cdevice);
             break;
 
         case SDL_CONTROLLERBUTTONDOWN:
