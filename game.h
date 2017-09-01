@@ -7,8 +7,8 @@ using namespace std;
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-
 #include "object.h"
+#include "audio.h"
 
 class Game {
 public:
@@ -16,17 +16,20 @@ public:
   ~Game();
   void loop();
   void update() {}
-  void input() {}
+  void input();
   void render();
   void draw(Object o);
   void draw(const char* msg, int x, int y, int r, int g, int b, int size);
 private:
+  bool block, release;
   SDL_Renderer* ren;
   SDL_Window* win;
+  TTF_Font *font;
   bool running;
-  int count;
   int frameCount, timerFPS, lastFrame;
-  Object star;
+  SDL_GameController *pad;
+  SDL_Joystick *joy;
+  int instanceID;
 };
 
 #endif //GAME_H

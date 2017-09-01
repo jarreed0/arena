@@ -1,5 +1,11 @@
 #include "object.h"
 
+Object::~Object() {
+
+ //SDL_DestroyTexture(tex);
+
+}
+
 void Object::setDest(int x, int y, int w, int h) {
   dest.x=x;
   dest.y=y;
@@ -16,5 +22,6 @@ void Object::setImage(string filename, SDL_Renderer* ren) {
 
   SDL_Surface* surf = IMG_Load(filename.c_str());
   tex = SDL_CreateTextureFromSurface(ren, surf);
+  SDL_FreeSurface(surf);
 
 }
