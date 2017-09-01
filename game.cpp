@@ -46,12 +46,9 @@ void Game::render() {
   rect.h=500;
   SDL_RenderFillRect(ren, &rect);
 
-  int fps = 6;
-  string s = "FPS: " + to_string(fps);
-  draw(s.c_str(), 5, 1, 0, 255, 0, 24);
-  for(int i=0; i<map.size(); i++) {
-    draw(map[i]);
-  }
+  drawMap();
+  drawHUD();
+
 
   frameCount++;
   int timerFPS = SDL_GetTicks()-lastFrame;
@@ -106,9 +103,29 @@ void Game::loadMap(int m) {
   map.clear();
   map.empty();
   if(m == 1) {
-    for(int i=0; i<10; i++) {
-      block.setDest(50*i, 100, 50, 50);
+    for(int i=0; i<16; i++) {
+      block.setDest(50*i, 0, 50, 50);
+      map.push_back(block);
+      block.setDest(50*i, 450, 50, 50);
+      map.push_back(block);
+    }
+    for(int i=0; i<8; i++) {
+      block.setDest(0, (i*50)+50, 50, 50);
+      map.push_back(block);
+      block.setDest(750, (i*50)+50, 50, 50);
       map.push_back(block);
     }
   }
+}
+
+void Game::drawMap() {
+  for(int i=0; i<map.size(); i++) {
+    draw(map[i]);
+  }
+}
+
+void Game::drawHUD() {
+  int fps = 6;
+  string s = "FPS: " + to_string(fps);
+  draw(s.c_str(), 5, 1, 0, 255, 0, 24);
 }
