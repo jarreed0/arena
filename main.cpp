@@ -1,5 +1,7 @@
 #include "game.h"
+using namespace std;
 
-int main() {
-  Game g;
+int main( int argc, char* args[] ) {
+ Game g;
+ return 0;
 }

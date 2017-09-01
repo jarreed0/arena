@@ -3,7 +3,7 @@
 
 #include <iostream>
 using namespace std;
-#include <SDL2/SDL.h>
+#include ".gitignore/header.h"
 
 class Audio {
 public:
