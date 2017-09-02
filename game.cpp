@@ -55,6 +55,7 @@ void Game::render() {
 
   drawMap();
   drawFilter();
+  draw(player);
   drawHUD();
 
   frameCount++;
@@ -195,5 +196,5 @@ void Game::update() {
         fall=0;
     }
   }
-  if(fall) player.setDestY(player.getDestY()+player.getGravity());
+  //if(fall) player.setDestY(player.getDestY()+player.getGravity());
 }
