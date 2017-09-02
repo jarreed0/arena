@@ -16,7 +16,7 @@ Game::Game() {
   player.setSource(0, 0, 50, 50);
   player.setImage("res/player.png", ren);
   player.setSpeed(SPEED);
-  player.setGravity(SPEED/2);
+  player.setGravity(SPEED);
   loop();
 }
 
@@ -122,6 +122,8 @@ void Game::drawHUD() {
   int fps = 6;
   string s = "FPS: " + to_string(fps);
   draw(s.c_str(), 5, 1, 0, 0, 0);
+  string c = "(" + to_string(player.getDestX()) + ", " + to_string(player.getDestY()) + ")";
+  draw(c.c_str(), 5, 26, 0, 0, 0);
 }
 
 void Game::drawFilter() {
@@ -178,10 +180,10 @@ void Game::loadMap(const char* filename) {
 }
 
 void Game::update() {
-  if(right) {
+  if(right && player.getDestY()<HEIGHT && player.getDestY()>0) {
     player.setDestX(player.getDestX()+player.getSpeed());
   }
-  if(left) {
+  if(left && player.getDestY()<HEIGHT && player.getDestY()>0) {
     player.setDestX(player.getDestX()-player.getSpeed());
   }
   bool fall=1;
@@ -193,8 +195,15 @@ void Game::update() {
       if(left) {
         player.setDestX(player.getDestX()+player.getSpeed());
       }
-        fall=0;
     }
+    player.setDestY(player.getDestY()+player.getGravity());
+    if(player.overlaps(map[i])) {
+      fall=0;
+    }
+    player.setDestY(player.getDestY()-player.getGravity());    
   }
-  //if(fall) player.setDestY(player.getDestY()+player.getGravity());
+  if(fall) player.setDestY(player.getDestY()+player.getGravity());
+  if(player.getDestY() > HEIGHT) {
+    player.setDestY(-player.getDestH());
+  }
 }
