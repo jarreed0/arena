@@ -13,6 +13,8 @@ using namespace std;
 
 #include "object.h"
 #include "audio.h"
+#include "canvas.h"
+#include "gamemech.h"
 
 class Game {
 public:
