@@ -27,6 +27,8 @@ public:
   void loadMap(int m);
   void drawMap();
   void drawHUD();
+  Canvas c;
+  GameMech gm;
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
