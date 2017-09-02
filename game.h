@@ -13,6 +13,7 @@ using namespace std;
 
 #include "object.h"
 #include "audio.h"
+#include "entity.h"
 
 #define WIDTH 800
 #define HEIGHT 400
@@ -27,7 +28,7 @@ public:
   void input();
   void render();
   void draw(Object o);
-  void draw(const char* msg, int x, int y, int r, int g, int b, int size);
+  void draw(const char* msg, int x, int y, int r, int g, int b);
   void drawMap();
   void drawHUD();
   void drawFilter();
