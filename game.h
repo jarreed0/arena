@@ -18,13 +18,14 @@ using namespace std;
 #define WIDTH 800
 #define HEIGHT 400
 #define BLOCK_SIZE 50
+#define SPEED 5
 
 class Game {
 public:
   Game();
   ~Game();
   void loop();
-  void update() {}
+  void update();
   void input();
   void render();
   void draw(Object o);
@@ -41,6 +42,8 @@ private:
   int frameCount, timerFPS, lastFrame;
   Object block, arcadebars;
   vector<Object> map;
+  Entity player;
+  bool left=0, right=0;
 };
 
 #endif //GAME_H

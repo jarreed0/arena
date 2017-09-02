@@ -12,6 +12,11 @@ Game::Game() {
   arcadebars.setImage("res/arcadebars.png", ren);
   arcadebars.setSource(0, 0, 2, 2);
   loadMap("res/1.map");
+  player.setDest(400, 150, 50, 50);
+  player.setSource(0, 0, 50, 50);
+  player.setImage("res/player.png", ren);
+  player.setSpeed(SPEED);
+  player.setGravity(SPEED/2);
   loop();
 }
 
@@ -93,10 +98,14 @@ void Game::input() {
  while(SDL_PollEvent(&event)) {
   if(event.type == SDL_QUIT) {running=false;cout << "Quiting\n";}
   if(event.type == SDL_KEYDOWN) {
-   if(event.key.keysym.sym == SDLK_ESCAPE) {running=0;}
-   if(event.key.keysym.sym == SDLK_F9 && !fnine) {fnine = true;if(!enablefilter) {enablefilter = true;}else{enablefilter = false;}}
+    if(event.key.keysym.sym == SDLK_d) right=true;
+    if(event.key.keysym.sym == SDLK_a) left=true;
+    if(event.key.keysym.sym == SDLK_ESCAPE) {running=0;}
+    if(event.key.keysym.sym == SDLK_F9 && !fnine) {fnine = true;if(!enablefilter) {enablefilter = true;}else{enablefilter = false;}}
   }
   if(event.type == SDL_KEYUP) {
+    if(event.key.keysym.sym == SDLK_d) right=false;
+    if(event.key.keysym.sym == SDLK_a) left=false;
 	  if(event.key.keysym.sym == SDLK_F9 && fnine) {fnine = false;}
   }
  }
@@ -165,4 +174,26 @@ void Game::loadMap(const char* filename) {
           }
   }
   in.close();
+}
+
+void Game::update() {
+  if(right) {
+    player.setDestX(player.getDestX()+SPEED);
+  }
+  if(left) {
+    player.setDestX(player.getDestX()-SPEED);
+  }
+  bool fall=1;
+  for(int i=0; i<map.size(); i++) {
+    if(player.overlaps(map[i])) {
+      if(right) {
+        player.setDestX(player.getDestX()-player.getSpeed());
+      }
+      if(left) {
+        player.setDestX(player.getDestX()+player.getSpeed());
+      }
+        fall=0;
+    }
+  }
+  if(fall) player.setDestY(player.getDestY()+player.getGravity());
 }
