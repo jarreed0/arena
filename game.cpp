@@ -179,10 +179,10 @@ void Game::loadMap(const char* filename) {
 
 void Game::update() {
   if(right) {
-    player.setDestX(player.getDestX()+SPEED);
+    player.setDestX(player.getDestX()+player.getSpeed());
   }
   if(left) {
-    player.setDestX(player.getDestX()-SPEED);
+    player.setDestX(player.getDestX()-player.getSpeed());
   }
   bool fall=1;
   for(int i=0; i<map.size(); i++) {
