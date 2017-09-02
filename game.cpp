@@ -9,6 +9,8 @@ Game::Game() {
   font = TTF_OpenFont("res/font.ttf", 24);
   block.setSource(0, 0, 50, 50);
   block.setImage("res/block.png", ren);
+  arcadebars.setImage("res/arcadebars.png", ren);
+  arcadebars.setSource(0, 0, 2, 2);
   loadMap("res/1.map");
   loop();
 }
@@ -48,6 +50,7 @@ void Game::render() {
 
   drawMap();
   drawHUD();
+  drawFilter();
 
   frameCount++;
   int timerFPS = SDL_GetTicks()-lastFrame;
@@ -91,8 +94,10 @@ void Game::input() {
   if(event.type == SDL_QUIT) {running=false;cout << "Quiting\n";}
   if(event.type == SDL_KEYDOWN) {
    if(event.key.keysym.sym == SDLK_ESCAPE) {running=0;}
+   if(event.key.keysym.sym == SDLK_F9 && !fnine) {fnine = true;if(!enablefilter) {enablefilter = true;}else{enablefilter = false;}}
   }
   if(event.type == SDL_KEYUP) {
+	  if(event.key.keysym.sym == SDLK_F9 && fnine) {fnine = false;}
   }
  }
 }
@@ -107,6 +112,15 @@ void Game::drawHUD() {
   int fps = 6;
   string s = "FPS: " + to_string(fps);
   draw(s.c_str(), 5, 1, 0, 0, 0, 30);
+}
+
+void Game::drawFilter() {
+	if(enablefilter) {
+		for(int i = 0; i < (HEIGHT/4); i++) {
+			arcadebars.setDest(0, 4 * i, WIDTH, 1);
+			draw(arcadebars);
+		}
+	}
 }
 
 void Game::loadMap(const char* filename) {

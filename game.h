@@ -30,14 +30,15 @@ public:
   void draw(const char* msg, int x, int y, int r, int g, int b, int size);
   void drawMap();
   void drawHUD();
+  void drawFilter();
   void loadMap(const char* filename);
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
   TTF_Font *font;
-  bool running;
+  bool running, enablefilter = false, fnine = false;
   int frameCount, timerFPS, lastFrame;
-  Object block;
+  Object block, arcadebars;
   vector<Object> map;
 };
 
