@@ -49,8 +49,8 @@ void Game::render() {
   SDL_RenderFillRect(ren, &rect);
 
   drawMap();
-  drawHUD();
   drawFilter();
+  drawHUD();
 
   frameCount++;
   int timerFPS = SDL_GetTicks()-lastFrame;
