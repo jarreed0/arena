@@ -4,8 +4,7 @@
 
 #include <iostream>
 using namespace std;
-#include <SDL.h>
-#include <SDL_image.h>
+#include ".gitignore/header.h"
 #include <stdio.h>
 #include <math.h>
 

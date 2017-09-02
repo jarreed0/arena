@@ -6,7 +6,7 @@ Game::Game() {
   SDL_SetWindowTitle(win, "Arena");
   TTF_Init();
   running=true;
-  font = TTF_OpenFont("Sans.ttf", 24);
+  font = TTF_OpenFont("res/font.ttf", 24);
   block.setSource(0, 0, 50, 50);
   block.setImage("res/block.png", ren);
   loadMap("res/1.map");
@@ -62,7 +62,7 @@ void Game::render() {
 void Game::draw(Object o) {
  SDL_Rect dest = o.getDest();
  SDL_Rect src = o.getSource();
- SDL_RenderCopyEx(ren, o.getTex(), &src, &dest, 0, NULL, SDL_FLIP_NONE);
+ SDL_RenderCopyEx(ren, o.getTex(), &src, &dest, o.getAngle(), NULL, SDL_FLIP_NONE);
 }
 
 void Game::draw(const char* msg, int x, int y, int r, int g, int b, int size) {
@@ -86,35 +86,15 @@ void Game::draw(const char* msg, int x, int y, int r, int g, int b, int size) {
 }
 
 void Game::input() {
-SDL_Event event;
-while(SDL_PollEvent(&event)) {
+ SDL_Event event;
+ while(SDL_PollEvent(&event)) {
   if(event.type == SDL_QUIT) {running=false;cout << "Quiting\n";}
-if(event.type == SDL_KEYDOWN) {
-  if(event.key.keysym.sym == SDLK_ESCAPE) {running=0;}
-}
-if(event.type == SDL_KEYUP) {
-}
-}
-}
-
-
-void Game::loadMap(int m) {
-  map.clear();
-  map.empty();
-  if(m == 1) {
-    for(int i=0; i<16; i++) {
-      block.setDest(BLOCK_SIZE*i, 0, BLOCK_SIZE, BLOCK_SIZE);
-      map.push_back(block);
-      block.setDest(BLOCK_SIZE*i, 450, BLOCK_SIZE, BLOCK_SIZE);
-      map.push_back(block);
-    }
-    for(int i=0; i<8; i++) {
-      block.setDest(0, (i+BLOCK_SIZE)+BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-      map.push_back(block);
-      block.setDest(750, (i*BLOCK_SIZE)+BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-      map.push_back(block);
-    }
+  if(event.type == SDL_KEYDOWN) {
+   if(event.key.keysym.sym == SDLK_ESCAPE) {running=0;}
   }
+  if(event.type == SDL_KEYUP) {
+  }
+ }
 }
 
 void Game::drawMap() {
@@ -126,7 +106,7 @@ void Game::drawMap() {
 void Game::drawHUD() {
   int fps = 6;
   string s = "FPS: " + to_string(fps);
-  draw(s.c_str(), 5, 1, 0, 255, 0, 24);
+  draw(s.c_str(), 5, 1, 0, 0, 0, 30);
 }
 
 void Game::loadMap(const char* filename) {
@@ -146,8 +126,27 @@ void Game::loadMap(const char* filename) {
                   }
                   in >> current;
                   if(current != 0) {
-                    block.setDest(BLOCK_SIZE*j, BLOCK_SIZE*i, BLOCK_SIZE, BLOCK_SIZE);
-                    map.push_back(block);                    
+                    block.setAngle(0);
+                    if(current == 2) {
+                      block.setAngle(90);
+                    } else if(current == 3 || current == 4 || current == 5 || current == 6) {
+                      block.setSource(50, 0, 50, 50);
+                      block.setAngle((current-3)*90);
+                    } else if(current == 7 || current == 8 || current == 9 || current == 10) {
+                      block.setSource(100, 0, 50, 50);
+                      block.setAngle((current-7)*90);
+                    } else if(current == 11 || current == 12 || current == 13 || current == 14) {
+                      block.setSource(150, 0, 50, 50);
+                      block.setAngle((current-11)*90);
+                    } else if(current == 15) {
+                      block.setSource(200, 0, 50, 50);
+                    } else {
+                      block.setSource(0, 0, 50, 50);                
+                    }
+                    block.setDest(BLOCK_SIZE*j, BLOCK_SIZE*i, BLOCK_SIZE, BLOCK_SIZE);                                          
+                    map.push_back(block);    
+                    block.setSource(0, 0, 50, 50);                
+                    block.setAngle(0);                    
                   }
           }
   }
