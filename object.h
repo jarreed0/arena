@@ -28,11 +28,6 @@ class Object {
 	double getVelY() {return velY;}
 	double getSpeed() {return speed;}
 	double getAngle() {return angle;}
-	bool isAlive() {return alive;}
-	int getFrame() {return frame;}
-	int getFrames() {return frames;}
-	void setFrames(int f) {frames = f;}
-	void setFrameDelay(int d) {framedelay = d;}
 	void setX(int x1) {x = x1;}
 	void setY(int y1) {y = y1;}
 	void setDestX(int x1) {dest.x = x1;}
@@ -48,30 +43,22 @@ class Object {
 	bool contains(Object b);
 	void lookAt(Object o);
 	void lookAt(int x, int y);
-	void update();
-	void setAlive(bool b) {alive = b;SDL_DestroyTexture(tex);}
 	void setYOffset(int y) {yoffset = y;}
 	int getYOffset() {return yoffset;}
 	void setXOffset(int xo) {xoffset = xo;}
 	int getXOffset() {return xoffset;}
-	void setAttackRate(int ar) {attackrate = ar;}
-	int getAttackRate() {return attackrate;}
-	void setHealth(int h) {health = h;}
-	int getHealth() {return health;}
-	void stopFrameCycle(bool c) {dontcycle = c;}
-	bool attackReady() {return attackready;}
-	void justAttacked() {attackready = false;}
 	void setId(int i) {id = i;}
 	int getId() {return id;}
 	bool isDisplayable() {return displayable;}
 	void setDisplayable(bool d) {displayable = d;}
+	void destroy();
 	private:
 	SDL_Rect dest;
 	SDL_Rect src;
 	SDL_Texture* tex;
-	int x, y, id, frames = 0, frame = 0, framedelay = 10, fcount = 0, xoffset = 0, yoffset = 0, attackrate = 0, acount = 0, health = 0;
+	int x, y, id, xoffset = 0, yoffset = 0, acount = 0;
 	double velX, velY, speed, angle = 0;
-	bool alive = true, dontcycle = false, attackready = false, displayable = true;
+	bool displayable = true;
 };
 
 #endif //OBJECT_H

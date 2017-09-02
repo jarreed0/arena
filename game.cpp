@@ -65,7 +65,7 @@ void Game::draw(Object o) {
  SDL_RenderCopyEx(ren, o.getTex(), &src, &dest, o.getAngle(), NULL, SDL_FLIP_NONE);
 }
 
-void Game::draw(const char* msg, int x, int y, int r, int g, int b, int size) {
+void Game::draw(const char* msg, int x, int y, int r, int g, int b) {
  SDL_Surface* surf;
  SDL_Texture* tex;
  SDL_Color color;
@@ -106,7 +106,7 @@ void Game::drawMap() {
 void Game::drawHUD() {
   int fps = 6;
   string s = "FPS: " + to_string(fps);
-  draw(s.c_str(), 5, 1, 0, 0, 0, 30);
+  draw(s.c_str(), 5, 1, 0, 0, 0);
 }
 
 void Game::loadMap(const char* filename) {

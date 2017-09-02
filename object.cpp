@@ -1,11 +1,13 @@
 #include "object.h"
 
 Object::Object() {
-
 }
 
 Object::~Object() {
+}
 
+void Object::destroy() {
+  SDL_DestroyTexture(tex);
 }
 
 void Object::setDest(int x, int y, int w, int h) {
@@ -85,25 +87,4 @@ bool Object::contains(Object b)
     else {
         return false;
     }
-}
-
-void Object::update() {
-	fcount++;
-	setSource(frame * src.w, 0, src.w, src.h);
-	if(fcount >= framedelay) {
-		fcount = 0;
-		frame++;
-		if(frame >= frames){
-			if(dontcycle) setAlive(false);
-			frame = 0;
-		}
-	}
-	
-	if(attackrate > 0) {
-		acount++;
-		if(acount >= attackrate) {
-			acount = 0;
-			attackready = true;
-		}
-	}
 }
