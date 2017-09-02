@@ -2,14 +2,14 @@
 
 Game::Game() {
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_CreateWindowAndRenderer(800, 500, 0, &win, &ren);
+  SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &win, &ren);
   SDL_SetWindowTitle(win, "Arena");
   TTF_Init();
   running=true;
   font = TTF_OpenFont("Sans.ttf", 24);
   block.setSource(0, 0, 50, 50);
   block.setImage("res/block.png", ren);
-  loadMap(1);
+  loadMap("res/1.map");
   loop();
 }
 
@@ -48,7 +48,6 @@ void Game::render() {
 
   drawMap();
   drawHUD();
-
 
   frameCount++;
   int timerFPS = SDL_GetTicks()-lastFrame;
@@ -104,15 +103,15 @@ void Game::loadMap(int m) {
   map.empty();
   if(m == 1) {
     for(int i=0; i<16; i++) {
-      block.setDest(50*i, 0, 50, 50);
+      block.setDest(BLOCK_SIZE*i, 0, BLOCK_SIZE, BLOCK_SIZE);
       map.push_back(block);
-      block.setDest(50*i, 450, 50, 50);
+      block.setDest(BLOCK_SIZE*i, 450, BLOCK_SIZE, BLOCK_SIZE);
       map.push_back(block);
     }
     for(int i=0; i<8; i++) {
-      block.setDest(0, (i*50)+50, 50, 50);
+      block.setDest(0, (i+BLOCK_SIZE)+BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
       map.push_back(block);
-      block.setDest(750, (i*50)+50, 50, 50);
+      block.setDest(750, (i*BLOCK_SIZE)+BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
       map.push_back(block);
     }
   }
@@ -128,4 +127,29 @@ void Game::drawHUD() {
   int fps = 6;
   string s = "FPS: " + to_string(fps);
   draw(s.c_str(), 5, 1, 0, 255, 0, 24);
+}
+
+void Game::loadMap(const char* filename) {
+  map.clear();
+  map.empty();
+  ifstream in(filename);
+  if(!in.is_open()) {
+          std::cout << "Problem with loading the file" << std::endl;
+          return;
+  }
+  int current;
+  for(int i=0; i<(HEIGHT/BLOCK_SIZE); i++) {
+          for(int j=0; j<(WIDTH/BLOCK_SIZE); j++) {
+                  if(in.eof()) {
+                          std::cout << "File end reached too soon" << std::endl;
+                          return;                        
+                  }
+                  in >> current;
+                  if(current != 0) {
+                    block.setDest(BLOCK_SIZE*j, BLOCK_SIZE*i, BLOCK_SIZE, BLOCK_SIZE);
+                    map.push_back(block);                    
+                  }
+          }
+  }
+  in.close();
 }

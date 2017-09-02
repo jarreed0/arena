@@ -8,11 +8,15 @@
 
 #include <iostream>
 using namespace std;
-
+#include <fstream>
 #include <vector>
 
 #include "object.h"
 #include "audio.h"
+
+#define WIDTH 800
+#define HEIGHT 400
+#define BLOCK_SIZE 50
 
 class Game {
 public:
@@ -27,6 +31,7 @@ public:
   void loadMap(int m);
   void drawMap();
   void drawHUD();
+  void loadMap(const char* filename);
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
