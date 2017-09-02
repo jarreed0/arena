@@ -13,6 +13,8 @@ using namespace std;
 
 #include "object.h"
 #include "audio.h"
+#include "canvas.h"
+#include "gamemech.h"
 
 #define WIDTH 800
 #define HEIGHT 400
@@ -31,7 +33,12 @@ public:
   void loadMap(int m);
   void drawMap();
   void drawHUD();
+<<<<<<< HEAD
   void loadMap(const char* filename);
+=======
+  Canvas c;
+  GameMech gm;
+>>>>>>> 62b2fa4387dcbd1b1483ed5f7c732d47f19698c6
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
