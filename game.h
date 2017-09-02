@@ -13,8 +13,6 @@ using namespace std;
 
 #include "object.h"
 #include "audio.h"
-#include "canvas.h"
-#include "gamemech.h"
 
 class Game {
 public:
@@ -29,8 +27,6 @@ public:
   void loadMap(int m);
   void drawMap();
   void drawHUD();
-  Canvas c;
-  GameMech gm;
 private:
   SDL_Renderer* ren;
   SDL_Window* win;
